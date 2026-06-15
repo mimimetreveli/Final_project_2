@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %} Register Account {% block title %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 card p-5 mt-4 shadow">
+        <h2 class="mb-4 text-center fw-bold text-primary">Student Registration</h2>
+
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {% for field, errors in form.errors.items() %}
+                    {% for error in errors %}<div>{{ error }}</div>{% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    {{ form.name.label(class="form-label") }}
+                    {{ form.name(class="form-control") }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.surname.label(class="form-label") }}
+                    {{ form.surname(class="form-control") }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-8">
+                    {{ form.student_id.label(class="form-label") }}
+                    {{ form.student_id(class="form-control", placeholder="11-digit number") }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.grade.label(class="form-label") }}
+                    {{ form.grade(class="form-control", type="number") }}
+                </div>
+            </div>
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control", placeholder="username@students.gov.ge") }}
+            </div>
+            <div class="mb-3">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                {{ form.confirm_password.label(class="form-label") }}
+                {{ form.confirm_password(class="form-control") }}
+            </div>
+            {{ form.register(class="btn btn-success w-100 mt-3 py-2") }}
+        </form>
+    </div>
+</div>
+{% endblock %}

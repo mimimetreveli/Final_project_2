@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %} School Feed {% endblock %}
+{% block content %}
+
+<div class="p-5 mb-5 text-center hero-banner shadow-sm">
+    <h1 class="display-5 fw-bold">Your Campus Bulletin</h1>
+    <p class="fs-5 text-muted">Exclusively showing updates from your school network context.</p>
+    <hr class="my-3 w-25 mx-auto">
+</div>
+
+<div class="container">
+    <h2 class="mb-4 fw-bold border-bottom pb-2">Recent Student Posts</h2>
+    <div class="row g-4">
+        {% for p in posts %}
+        <div class="col-md-4">
+            <div class="card h-100">
+                {% if p.img %}
+                <img src="/static/images/{{ p.img }}" class="card-img-top" alt="post attachment">
+                {% endif %}
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="card-title fw-bold text-primary">{{ p.title }}</h5>
+                        <p class="text-muted small mb-2">Posted by: {{ p.author.name }} {{ p.author.surname }} (Grade {{ p.author.grade }})</p>
+                        <p class="card-text text-truncate-custom">{{ p.content }}</p>
+                    </div>
+                    <div class="mt-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <a href="/like_post/{{ p.id }}" class="btn btn-sm {% if p in current_user.liked_posts %}btn-success{% else %}btn-outline-success{% endif %}">
+                                ❤️ {{ p.liked_by.count() }} Likes
+                            </a>
+                            <a href="/post/{{ p.id }}" class="btn btn-primary btn-sm px-3">Read Full</a>
+                        </div>
+                        {% if p.user_id == current_user.id %}
+                        <a href="/delete_post/{{ p.id }}" class="btn btn-outline-danger btn-sm w-100">Delete Post</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12 text-center text-muted py-5">
+            <h4>No one from your school has shared anything yet. Be the first!</h4>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

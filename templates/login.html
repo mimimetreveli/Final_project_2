@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5 card p-5 mt-5 shadow">
+        <h2 class="mb-4 text-center fw-bold text-primary">Student Authentication</h2>
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {% for field, errors in form.errors.items() %}
+                    {% for error in errors %}<div>{{ error }}</div>{% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control", placeholder="example@students.gov.ge") }}
+            </div>
+            <div class="mb-3">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control") }}
+            </div>
+            {{ form.login(class="btn btn-success w-100 mt-3 py-2") }}
+        </form>
+    </div>
+</div>
+{% endblock %}

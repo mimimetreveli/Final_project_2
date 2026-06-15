@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %} Post Details {% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="mb-4">
+        <a href="/" class="btn btn-outline-secondary btn-sm">⬅️ Back to School Feed</a>
+    </div>
+
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold text-primary">{{ p.title }}</h1>
+        <p class="text-muted">By: {{ p.author.name }} {{ p.author.surname }} | Grade: {{ p.author.grade }} | Date: {{ p.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+    </div>
+
+    <div class="row justify-content-center">
+        {% if p.img %}
+        <div class="col-md-8 mb-4">
+            <div class="detail-image-box border shadow-sm rounded overflow-hidden text-center bg-white">
+                <img src="/static/images/{{ p.img }}" alt="Attached Image" class="img-fluid">
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="col-md-8">
+            <div class="p-4 card shadow-sm">
+                <p class="fs-5" style="white-space: pre-line; color: #334155;">{{ p.content }}</p>
+                <hr class="my-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="/like_post/{{ p.id }}" class="btn {% if p in current_user.liked_posts %}btn-success{% else %}btn-outline-success{% endif %}">
+                        ❤️ {{ p.liked_by.count() }} Student Likes
+                    </a>
+                    {% if p.user_id == current_user.id %}
+                    <a href="/delete_post/{{ p.id }}" class="btn btn-outline-danger">Remove Post</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -17,16 +17,12 @@ class BaseModel:
     def save():
         db.session.commit()
 
-
-# Table for managing student likes
 likes_table = db.Table(
     'post_likes',
     db.Column('user_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), primary_key=True),
     db.Column('post_id', db.Integer, db.ForeignKey('posts.id', ondelete='CASCADE'), primary_key=True)
 )
 
-
-# === TABLE 1: SCHOOLS ===
 class School(db.Model, BaseModel):
     __tablename__ = "schools"
     id = db.Column(db.Integer(), primary_key=True)
@@ -34,8 +30,6 @@ class School(db.Model, BaseModel):
 
     students = db.relationship('User', backref='school', lazy=True)
 
-
-# === TABLE 2: USERS ===
 class User(db.Model, BaseModel, UserMixin):
     __tablename__ = "users"
     id = db.Column(db.Integer(), primary_key=True)
@@ -63,7 +57,6 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-# === TABLE 3: POSTS ===
 class Post(db.Model, BaseModel):
     __tablename__ = "posts"
     id = db.Column(db.Integer(), primary_key=True)

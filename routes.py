@@ -37,7 +37,6 @@ def add_post():
 
         file = form.image.data
         if file and file.filename != '':
-            # Safeguard static directory context paths
             img_dir = path.join(app.root_path, "static", "images")
             if not path.exists(img_dir):
                 import os
@@ -118,17 +117,14 @@ def register():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for("home"))
-
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data.strip().lower()).first()
         if user and user.check_password(form.password.data):
             login_user(user)
             return redirect(url_for("home"))
-        flash("Invalid email or password.")
-
+        flash("Invalid structural credentials provided.")
     return render_template("login.html", form=form)
-
 
 @app.route("/logout")
 @login_required
@@ -139,4 +135,4 @@ def logout():
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    return render_template("about")

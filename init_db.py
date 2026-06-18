@@ -1,5 +1,6 @@
 import os
 from ext import app, db
+from models import Post, User, School
 
 with app.app_context():
     db_path = app.config["SQLALCHEMY_DATABASE_URI"].replace("sqlite:///", "")

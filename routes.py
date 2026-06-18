@@ -130,9 +130,9 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("login"))
+    return redirect(url_for("login.html"))
 
 
 @app.route("/about")
 def about():
-    return render_template("about")
+    return render_template("about.html")
